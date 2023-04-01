@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.challengechaptertiga.fragment.FragmentSecond
 import com.example.challengechaptertiga.R
@@ -20,27 +21,13 @@ class AdapterWord(private val list: List<Char>) :
 
             binding.btnClick.setOnClickListener {
                 // instance
-                val appCompAct = it.context as AppCompatActivity
-                val fragmentManager = appCompAct.supportFragmentManager
-                val detailWordFragment = FragmentSecond()
-                val fragment =
-                    fragmentManager.findFragmentByTag(FragmentSecond::class.java.simpleName)
-
-                if (fragment !is FragmentSecond) { // !is (not) memeriksa kebalikan kondisi
-                    // send data to fragment second
-                    val bundle = Bundle()
-                    bundle.putString("EXTRA_WORD", list.toString())
-                    detailWordFragment.arguments = bundle
-                    // menambahkan Fragment ke Activity dengan menggunakan transaksi FragmentManager
-                    fragmentManager
-                        .beginTransaction()
-                        .replace(
-                            R.id.frameMain,
-                            detailWordFragment,
-                            FragmentSecond::class.java.simpleName
-                        )
-                        .addToBackStack(null).commit()
+                val bundle = Bundle().apply {
+                    putString("EXTRA_WORD", list.toString())
                 }
+                // memanggil id action nav graph
+                it.findNavController()
+                    .navigate(R.id.action_fragmentFirst_to_fragmentSecond, bundle)
+
             }
         }
     }

@@ -9,14 +9,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val fragmentManager = supportFragmentManager
-        val homeFragment = FragmentFirst()
-        val fragment = fragmentManager.findFragmentByTag(FragmentFirst::class.java.simpleName)
 
-        if (fragment !is FragmentFirst){
-            fragmentManager
-                .beginTransaction().add(R.id.frameMain, homeFragment, FragmentFirst::class.java.simpleName)
-                .commit() // menyelesaikan transaksi dan menampilkan fragment ke dalam container.
-        }
     }
 }
